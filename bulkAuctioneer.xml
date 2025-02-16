@@ -1,0 +1,87 @@
+<Ui>
+    <Frame name="BulkAuctioneerUI" parent="AuctionFrameAuctions">
+        <Size>
+            <AbsDimension x="250" y="80" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT">
+                <Offset>
+                    <AbsDimension x="20" y="-70" />
+                </Offset>
+            </Anchor>
+        </Anchors>
+
+        <Frames>
+            <EditBox name="StackSizeInput" maxLetters="3">
+                <Size>
+                    <AbsDimension x="40" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT">
+                        <Offset>
+                            <AbsDimension x="0" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface/Tooltips/UI-Tooltip-Background" />
+                <Scripts>
+                    <OnTextChanged>
+                        local value = tonumber(StackSizeInput:GetText()) or 1
+                        StackSizeInput:SetText(math.max(1, value))
+                    </OnTextChanged>
+                </Scripts>
+            </EditBox>
+
+            <EditBox name="StackAmountInput" maxLetters="3">
+                <Size>
+                    <AbsDimension x="40" y="20" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="StackSizeInput">
+                        <Offset>
+                            <AbsDimension x="50" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Backdrop bgFile="Interface/Tooltips/UI-Tooltip-Background" />
+                <Scripts>
+                    <OnTextChanged>
+                        local value = tonumber(StackAmountInput:GetText()) or 1
+                        StackAmountInput:SetText(math.max(1, value))
+                    </OnTextChanged>
+                </Scripts>
+            </EditBox>
+
+            <Button name="PostBulkAuctionButton">
+                <Size>
+                    <AbsDimension x="80" y="22" />
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="StackAmountInput">
+                        <Offset>
+                            <AbsDimension x="50" y="0" />
+                        </Offset>
+                    </Anchor>
+                </Anchors>
+                <Text>
+                    <FontString>
+                        <Font name="Fonts\\FRIZQT__.TTF" height="12" />
+                        <Text>Post Auction</Text>
+                    </FontString>
+                </Text>
+                <Scripts>
+                    <OnClick>
+                        local stackSize = tonumber(StackSizeInput:GetText()) or 1
+                        local stackAmount = tonumber(StackAmountInput:GetText()) or 1
+                        local startPrice = MoneyInputFrame_GetCopper(StartPriceMoneyInput)
+                        local buyoutPrice = MoneyInputFrame_GetCopper(BuyoutPriceMoneyInput)
+                        local duration = UIDropDownMenu_GetSelectedValue(AuctionFrameAuctions_DurationDropDown)
+
+                        QueueAuction(stackSize, stackAmount, startPrice, buyoutPrice, duration)
+                        if not isPosting then PostNextAuction() end
+                    </OnClick>
+                </Scripts>
+            </Button>
+        </Frames>
+    </Frame>
+</Ui>
