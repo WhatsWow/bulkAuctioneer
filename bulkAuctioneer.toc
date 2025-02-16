@@ -3,7 +3,6 @@
 ## Author: Whatsup
 ## Version: 1.0
 ## Notes: Adds batch posting and stack controls to the Auction House.
-## Dependencies: AuctionFrame
 
 BulkAuctioneer.lua
 BulkAuctioneer.xml
